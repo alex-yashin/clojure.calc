@@ -1,5 +1,4 @@
 (ns app.core)
-(require '[clojure.string :as str])
 
 (let [zero (int \0)
       nine (int \9)]
@@ -35,9 +34,6 @@
         (cond 
             (= s "") arr
             :else (conj arr s))))
-
-(defn makePostfixIterationDebug [agg elem]
-    (println elem))
 
 (defn moveOperatorsFromStack [agg]
     (let [[out stack] agg top (last stack)]
@@ -80,13 +76,12 @@
         (isDigit? (first elem)) (conj stack elem)
         (isOperator? elem)
             (let [secondArgument (last stack)]
-                (do
                     (let [firstArgument (last (pop stack))]
                             (cond 
                                 (= elem "+") (conj (pop (pop stack)) (+ (bigint firstArgument) (bigint secondArgument)))
                                 (= elem "-") (conj (pop (pop stack)) (- (bigint firstArgument) (bigint secondArgument)))
                                 (= elem "*") (conj (pop (pop stack)) (* (bigint firstArgument) (bigint secondArgument)))
-                                (= elem "/") (conj (pop (pop stack)) (/ (bigint firstArgument) (bigint secondArgument)))))))))
+                                (= elem "/") (conj (pop (pop stack)) (/ (bigint firstArgument) (bigint secondArgument))))))))
 
 (defn calculatePostfix [postfix]
     (first (reduce calculateIteration [] postfix)))
