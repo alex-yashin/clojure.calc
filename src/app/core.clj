@@ -62,7 +62,7 @@
                             (cond
                                 (> (getOperatorPriority elem) (getOperatorPriority top)) [out (conj stack elem)]
                                 :else (addToStack (moveOperatorsFromStack [out stack]) elem))
-                        :elem [out (conj stack elem)]))
+                        :else [out (conj stack elem)]))
             (= elem "(") [out (conj stack elem)]
             (= elem ")") (removeParenthesFromStack (moveOperatorsFromStack [out stack]))
             :else [out stack])))
